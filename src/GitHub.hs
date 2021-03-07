@@ -100,6 +100,8 @@ module GitHub (
     referenceR,
     referencesR,
     createReferenceR,
+    deleteReferenceR,
+    namespacedReferencesR,
 
     -- ** Trees
     -- | See <https://developer.github.com/v3/git/trees/>
@@ -175,6 +177,11 @@ module GitHub (
     membersOfWithR,
     isMemberOfR,
     orgInvitationsR,
+    -- ** Outside Collaborators
+    -- | See <https://developer.github.com/v3/orgs/outside_collaborators/>
+    --
+    -- Missing endpoints: All except /Outside Collaborator List/
+    outsideCollaboratorsR,
 
     -- ** Teams
     -- | See <https://developer.github.com/v3/orgs/teams/>
@@ -223,6 +230,7 @@ module GitHub (
     pullRequestCommentsR,
     pullRequestCommentR,
     createPullCommentR,
+    createPullCommentReplyR,
 
     -- ** Pull request reviews
     -- | See <https://developer.github.com/v3/pulls/reviews/>
@@ -354,13 +362,10 @@ module GitHub (
 
     -- * Search
     -- | See <https://developer.github.com/v3/search/>
-    --
-    -- Missing endpoints:
-    --
-    -- * Search users
     searchReposR,
     searchCodeR,
     searchIssuesR,
+    searchUsersR,
 
     -- * Users
     -- | See <https://developer.github.com/v3/users/>
@@ -432,6 +437,7 @@ import GitHub.Endpoints.Issues.Labels
 import GitHub.Endpoints.Issues.Milestones
 import GitHub.Endpoints.Organizations
 import GitHub.Endpoints.Organizations.Members
+import GitHub.Endpoints.Organizations.OutsideCollaborators
 import GitHub.Endpoints.Organizations.Teams
 import GitHub.Endpoints.PullRequests
 import GitHub.Endpoints.PullRequests.Comments

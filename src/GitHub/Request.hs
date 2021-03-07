@@ -31,7 +31,7 @@
 -- > githubRequest :: GH.Request 'False a -> GithubMonad a
 -- > githubRequest = singleton
 module GitHub.Request (
-    -- * A convinient execution of requests
+    -- * A convenient execution of requests
     github,
     github',
     GitHubRW,
@@ -90,7 +90,7 @@ import Network.HTTP.Client
        httpLbs, method, newManager, redirectCount, requestBody, requestHeaders,
        setQueryString, setRequestIgnoreStatus)
 import Network.HTTP.Link.Parser (parseLinkHeaderBS)
-import Network.HTTP.Link.Types  (Link (..), LinkParam (..), href, linkParams)
+import Network.HTTP.Link.Types  (LinkParam (..), href, linkParams)
 import Network.HTTP.Types       (Method, RequestHeaders, Status (..))
 import Network.URI
        (URI, escapeURIString, isUnescapedInURIComponent, parseURIReference,
@@ -100,7 +100,6 @@ import qualified Data.ByteString              as BS
 import qualified Data.ByteString.Lazy         as LBS
 import qualified Data.Text                    as T
 import qualified Data.Text.Encoding           as TE
-import qualified Data.Vector                  as V
 import qualified Network.HTTP.Client          as HTTP
 import qualified Network.HTTP.Client.Internal as HTTP
 
@@ -121,10 +120,10 @@ import GitHub.Data.Request
 import Paths_github (version)
 
 -------------------------------------------------------------------------------
--- Convinience
+-- Convenience
 -------------------------------------------------------------------------------
 
--- | A convinience function to turn functions returning @'Request' rw x@,
+-- | A convenience function to turn functions returning @'Request' rw x@,
 -- into functions returning @IO (Either 'Error' x)@.
 --
 -- >>> :t \auth -> github auth userInfoForR
@@ -242,7 +241,7 @@ executeRequestWithMgrAndRes mgr auth req = runExceptT $ do
     performHttpReq httpReq (PagedQuery _ _ l) =
         unTagged (performPagedRequest httpLbs' predicate httpReq :: Tagged mt (ExceptT Error IO (HTTP.Response b)))
       where
-        predicate v = lessFetchCount (V.length v) l
+        predicate v = lessFetchCount (length v) l
 
     performHttpReq httpReq (Command _ _ _) = do
         res <- httpLbs' httpReq
@@ -508,7 +507,7 @@ getNextUrl req = do
     nextURI <- find isRelNext links
     return $ href nextURI
   where
-    isRelNext :: Link -> Bool
+    -- isRelNext :: Link -> Bool or Link uri -> Bool
     isRelNext = any (== relNextLinkParam) . linkParams
 
     relNextLinkParam :: (LinkParam, Text)
